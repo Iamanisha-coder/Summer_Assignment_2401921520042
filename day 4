@@ -1,0 +1,82 @@
+// MATRIX DIAGONAL SUM
+Class Solution {
+    public int diagonalSum(int[][] mat) {
+        int n = mat.length;
+        int total = 0;
+
+        for (int i = 0; i < n; i++) {
+            total += mat[i][i];
+            total += mat[i][n - i - 1];
+        }
+        if (n % 2 == 1) {
+            total -= mat[n / 2][n / 2];
+        }
+        return total;
+    }
+}
+
+//RESHAPE THE MATRIX
+lass Solution {
+    public int[][] matrixReshape(int[][] mat, int r, int c) {
+        int m = mat.length;        
+        int n = mat[0].length;     
+
+        if (m * n != r * c) {
+            return mat;
+        }
+
+        int[][] result = new int[r][c];
+        int row = 0, col = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                result[row][col] = mat[i][j];
+                col++;
+                if (col == c) {
+                    col = 0;
+                    row++;
+                }
+            }
+        }
+        return result;
+
+//SPIRAL MATRIX
+mport java.util.*;
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+        if (matrix == null || matrix.length == 0) return result;
+
+        int top = 0, bottom = matrix.length - 1;
+        int left = 0, right = matrix[0].length - 1;
+
+        while (top <= bottom && left <= right) {
+            for (int i = left; i <= right; i++) {
+                result.add(matrix[top][i]);
+            }
+            top++;
+            for (int i = top; i <= bottom; i++) {
+                result.add(matrix[i][right]);
+            }
+            right--;
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    result.add(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    result.add(matrix[i][left]);
+                }
+                left++;
+            }
+        }
+
+        return result;
+    }
+}
+
+    }
+}
