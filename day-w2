@@ -1,0 +1,70 @@
+// find the length of the longest substring without duplicate characters
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int maxLength = 0;
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            if (map.containsKey(c)) {
+                left = Math.max(left, map.get(c) + 1);
+            }
+            map.put(c, right);
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
+    }
+}
+
+
+// Permutation in string
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length()) return false;
+
+        int[] count = new int[26];
+        for (char c : s1.toCharArray()) count[c - 'a']++;
+
+        int left = 0;
+        for (int right = 0; right < s2.length(); right++) {
+            count[s2.charAt(right) - 'a']--;
+            if (right - left + 1 > s1.length()) {
+                count[s2.charAt(left) - 'a']++;
+                left++;
+            }
+            if (allZero(count)) return true;
+        }
+        return false;
+    }
+
+    private boolean allZero(int[] count) {
+        for (int c : count) if (c != 0) return false;
+        return true;
+    }
+}
+
+
+// Find all anagrams in a string
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if (s.length() < p.length()) return res;
+        int[] count = new int[26];
+        for (char c : p.toCharArray()) count[c - 'a']++;
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            count[s.charAt(right) - 'a']--;
+            if (right - left + 1 > p.length()) {
+                count[s.charAt(left) - 'a']++;
+                left++;
+            }
+            if (allZero(count)) res.add(left);
+        }
+        return res;
+    }
+    private boolean allZero(int[] count) {
+        for (int c : count) if (c != 0) return false;
+        return true;
+    }
+}
