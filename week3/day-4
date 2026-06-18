@@ -1,0 +1,60 @@
+// daily temperatures
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        int n = temperatures.length;
+        int[] answer = new int[n];
+        java.util.Stack<Integer> stack = new java.util.Stack<>();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                int prevIndex = stack.pop();
+                answer[prevIndex] = i - prevIndex;
+            }
+            stack.push(i);
+        }
+        return answer;
+    }
+}
+
+// evaluate reverse polish notation
+class Solution {
+    public int evalRPN(String[] tokens) {
+        java.util.Stack<Integer> stack = new java.util.Stack<>();
+        for (String token : tokens) {
+            if (token.equals("+")) {
+                stack.push(stack.pop() + stack.pop());
+            } else if (token.equals("-")) {
+                int b = stack.pop();
+                int a = stack.pop();
+                stack.push(a - b);
+            } else if (token.equals("*")) {
+                stack.push(stack.pop() * stack.pop());
+            } else if (token.equals("/")) {
+                int b = stack.pop();
+                int a = stack.pop();
+                stack.push(a / b); 
+            } else {
+                stack.push(Integer.parseInt(token));
+            }
+        }
+        return stack.pop();
+    }
+}
+
+// largest rectangle in histrogram
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        java.util.Stack<Integer> stack = new java.util.Stack<>();
+        int maxArea = 0;
+        for (int i = 0; i <= n; i++) {
+            int h = (i == n ? 0 : heights[i]); 
+            while (!stack.isEmpty() && h < heights[stack.peek()]) {
+                int height = heights[stack.pop()];
+                int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+                maxArea = Math.max(maxArea, height * width);
+            }
+            stack.push(i);
+        }
+        return maxArea;
+    }
+}
