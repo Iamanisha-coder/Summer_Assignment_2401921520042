@@ -1,0 +1,95 @@
+// 1. Interface
+interface Test {
+    int square(int x);
+}
+class Arithmetic implements Test {
+    public int square(int x) {
+        return x * x;
+    }
+}
+
+// 2. Outer and Inner Class
+class Outer {
+    void display() {
+        System.out.println("Outer Class");
+    }
+    class Inner {
+        void display() {
+            System.out.println("Inner Class");
+        }
+    }
+}
+
+// 3. Point Class
+class Point {
+    private int x, y;
+
+    Point() {}
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    void setX(int x) { this.x = x; }
+    void setY(int y) { this.y = y; }
+    void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    void show() {
+        System.out.println("Point = (" + x + "," + y + ")");
+    }
+}
+
+// 4. Box and Box3D
+class Box {
+    int l, b;
+
+    Box(int l, int b) {
+        this.l = l;
+        this.b = b;
+    }
+
+    int area() {
+        return l * b;
+    }
+}
+
+class Box3D extends Box {
+    int h;
+
+    Box3D(int l, int b, int h) {
+        super(l, b);
+        this.h = h;
+    }
+
+    int volume() {
+        return l * b * h;
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+
+        // Program 1
+        Arithmetic a = new Arithmetic();
+        System.out.println("Square = " + a.square(5));
+
+        // Program 2
+        Outer o = new Outer();
+        o.display();
+        Outer.Inner i = o.new Inner();
+        i.display();
+
+        // Program 3
+        Point p = new Point(2, 3);
+        p.show();
+
+        // Program 4
+        Box3D b = new Box3D(2, 3, 4);
+        System.out.println("Area = " + b.area());
+        System.out.println("Volume = " + b.volume());
+    }
+}
