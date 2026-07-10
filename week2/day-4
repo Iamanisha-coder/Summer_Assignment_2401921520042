@@ -1,0 +1,70 @@
+//1
+class Solution {
+public:
+    string reverseWords(string s) {
+        int start = 0;
+        for (int i = 0; i <= s.size(); i++) {
+            if (i == s.size() || s[i] == ' ') {
+                reverse(s.begin() + start, s.begin() + i);
+                start = i + 1;
+            }
+        }
+        return s;
+    }
+};
+//2
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<int> counts;
+        stack<string> resultStack;
+        string result = "";
+        int num = 0;
+
+        for (char c : s) {
+            if (isdigit(c)) {
+                num = num * 10 + (c - '0');  // build number
+            } else if (c == '[') {
+                counts.push(num);
+                resultStack.push(result);
+                num = 0;
+                result = "";
+            } else if (c == ']') {
+                string temp = resultStack.top(); resultStack.pop();
+                int repeat = counts.top(); counts.pop();
+                for (int i = 0; i < repeat; i++) temp += result;
+                result = temp;
+            } else {
+                result += c;  // normal character
+            }
+        }
+        return result;
+    }
+};
+
+//3
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        backtrack(result, "", 0, 0, n);
+        return result;
+    }
+    
+    void backtrack(vector<string>& result, string current, int open, int close, int max) {
+        if (current.size() == max * 2) {
+            result.push_back(current);
+            return;
+        }
+        if (open < max) {
+            backtrack(result, current + "(", open + 1, close, max);
+        }
+        if (close < open) {
+            backtrack(result, current + ")", open, close + 1, max);
+        }
+    }
+};
+
+  
+};
+
