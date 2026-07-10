@@ -1,0 +1,70 @@
+//1
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        mapping = {')': '(', ']': '[', '}': '{'}
+        
+        for char in s:
+            if char in mapping:  # closing bracket
+                top = stack.pop() if stack else '#'
+                if mapping[char] != top:
+                    return False
+            else:  # opening bracket
+                stack.append(char)
+        
+        return not stack
+
+//2
+class MinStack {
+private:
+    stack<int> s, minS;
+public:
+    MinStack() {}
+    
+    void push(int val) {
+        s.push(val);
+        if (minS.empty() || val <= minS.top()) {
+            minS.push(val);
+        }
+    }
+    
+    void pop() {
+        if (s.top() == minS.top()) {
+            minS.pop();
+        }
+        s.pop();
+    }
+    
+    int top() {
+        return s.top();
+    }
+    
+    int getMin() {
+        return minS.top();
+    }
+};
+
+
+//3
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int,int> nextGreater;
+        stack<int> st;
+        
+        for (int num : nums2) {
+            while (!st.empty() && st.top() < num) {
+                nextGreater[st.top()] = num;
+                st.pop();
+            }
+            st.push(num);
+        }
+        
+        vector<int> result;
+        for (int num : nums1) {
+            result.push_back(nextGreater.count(num) ? nextGreater[num] : -1);
+        }
+        return result;
+    }
+};
+
